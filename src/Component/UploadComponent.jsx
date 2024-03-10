@@ -1,54 +1,37 @@
 import React, { useState } from 'react';
-import axios from 'axios'; // Assuming you're using axios for API calls
+import axios from 'axios';
+import { Link } from 'react-router-dom';
 
 export const UploadComponent = () => {
-  const [mediaType, setMediaType] = useState('video');
-  const [selectedFile, setSelectedFile] = useState(null);
-  const [fileName, setFileName] = useState('');
-  const [uploadStatus, setUploadStatus] = useState(null);
-  const [uploadError, setUploadError] = useState(null);
+  const [file, setFile] = useState(null);
+  const [uploadMessage, setUploadMessage] = useState('');
+  const [showImage, setShowImage] = useState(false);
+  const handleFileChange = (event) => {
+    setFile(event.target.files[0]);
+  };
 
-  const handleUpload = async () => {
-    setUploadStatus('Uploading...');
-    setUploadError(null);
+  const handleUpload = () => {
+    const formData = new FormData();
+    formData.append('image', file);
 
-    try {
-      const formData = new FormData();
-      formData.append('file', selectedFile);
-      formData.append('mediaType', mediaType);
-
-      const response = await axios.post('/upload', formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
+    axios.post('http://localhost:5000/upload', formData)
+      .then(response => {
+        setUploadMessage(response.data.message);
+        setShowImage(true); 
+      })
+      .catch(error => {
+        console.error('Error uploading image:', error);
       });
-
-      setUploadStatus('Upload successful!');
-      setSelectedFile(null); // Clear selected file input
-      setFileName(''); // Clear filename input
-
-      // Optionally, handle response data from server here
-    } catch (error) {
-      console.error('Upload error:', error);
-      setUploadStatus(null);
-      setUploadError('Upload failed. Please try again.');
-    }
   };
 
   return (
     <div>
-      <select value={mediaType} onChange={(e) => setMediaType(e.target.value)}>
-        <option value="video">Video</option>
-        <option value="image">Image</option>
-      </select>
-      
-      <input type="file" onChange={(e) => setSelectedFile(e.target.files[0])} />
-
-      <input type="text" value={fileName} onChange={(e) => setFileName(e.target.value)} />
-
+      <h1>Upload Image</h1>
+      <input type="file" onChange={handleFileChange} />
       <button onClick={handleUpload}>Upload</button>
-      {uploadStatus && <p>{uploadStatus}</p>}
-      {uploadError && <p className="error">{uploadError}</p>}
+      {uploadMessage && <p>{uploadMessage}</p>}
+      {showImage && <button onClick={() => setShowImage(false)}>Hide Image</button>}
+      {/* <Link to="/display">Go to Display Component</Link> */}
     </div>
   );
-};
+}

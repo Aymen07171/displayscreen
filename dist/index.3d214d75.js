@@ -33786,81 +33786,43 @@ parcelHelpers.export(exports, "UploadComponent", ()=>UploadComponent);
 var _jsxDevRuntime = require("react/jsx-dev-runtime");
 var _react = require("react");
 var _reactDefault = parcelHelpers.interopDefault(_react);
-var _axios = require("axios"); // Assuming you're using axios for API calls
+var _axios = require("axios");
 var _axiosDefault = parcelHelpers.interopDefault(_axios);
+var _reactRouterDom = require("react-router-dom");
 var _s = $RefreshSig$();
 const UploadComponent = ()=>{
     _s();
-    const [mediaType, setMediaType] = (0, _react.useState)("video");
-    const [selectedFile, setSelectedFile] = (0, _react.useState)(null);
-    const [fileName, setFileName] = (0, _react.useState)("");
-    const [uploadStatus, setUploadStatus] = (0, _react.useState)(null);
-    const [uploadError, setUploadError] = (0, _react.useState)(null);
-    const handleUpload = async ()=>{
-        setUploadStatus("Uploading...");
-        setUploadError(null);
-        try {
-            const formData = new FormData();
-            formData.append("file", selectedFile);
-            formData.append("mediaType", mediaType);
-            const response = await (0, _axiosDefault.default).post("/upload", formData, {
-                headers: {
-                    "Content-Type": "multipart/form-data"
-                }
-            });
-            setUploadStatus("Upload successful!");
-            setSelectedFile(null); // Clear selected file input
-            setFileName(""); // Clear filename input
-        // Optionally, handle response data from server here
-        } catch (error) {
-            console.error("Upload error:", error);
-            setUploadStatus(null);
-            setUploadError("Upload failed. Please try again.");
-        }
+    const [file, setFile] = (0, _react.useState)(null);
+    const [uploadMessage, setUploadMessage] = (0, _react.useState)("");
+    const [showImage, setShowImage] = (0, _react.useState)(false);
+    const handleFileChange = (event)=>{
+        setFile(event.target.files[0]);
+    };
+    const handleUpload = ()=>{
+        const formData = new FormData();
+        formData.append("image", file);
+        (0, _axiosDefault.default).post("http://localhost:5000/upload", formData).then((response)=>{
+            setUploadMessage(response.data.message);
+            setShowImage(true);
+        }).catch((error)=>{
+            console.error("Error uploading image:", error);
+        });
     };
     return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
         children: [
-            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("select", {
-                value: mediaType,
-                onChange: (e)=>setMediaType(e.target.value),
-                children: [
-                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("option", {
-                        value: "video",
-                        children: "Video"
-                    }, void 0, false, {
-                        fileName: "src/Component/UploadComponent.jsx",
-                        lineNumber: 41,
-                        columnNumber: 9
-                    }, undefined),
-                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("option", {
-                        value: "image",
-                        children: "Image"
-                    }, void 0, false, {
-                        fileName: "src/Component/UploadComponent.jsx",
-                        lineNumber: 42,
-                        columnNumber: 9
-                    }, undefined)
-                ]
-            }, void 0, true, {
+            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("h1", {
+                children: "Upload Image"
+            }, void 0, false, {
                 fileName: "src/Component/UploadComponent.jsx",
-                lineNumber: 40,
+                lineNumber: 29,
                 columnNumber: 7
             }, undefined),
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("input", {
                 type: "file",
-                onChange: (e)=>setSelectedFile(e.target.files[0])
+                onChange: handleFileChange
             }, void 0, false, {
                 fileName: "src/Component/UploadComponent.jsx",
-                lineNumber: 45,
-                columnNumber: 7
-            }, undefined),
-            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("input", {
-                type: "text",
-                value: fileName,
-                onChange: (e)=>setFileName(e.target.value)
-            }, void 0, false, {
-                fileName: "src/Component/UploadComponent.jsx",
-                lineNumber: 47,
+                lineNumber: 30,
                 columnNumber: 7
             }, undefined),
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("button", {
@@ -33868,32 +33830,32 @@ const UploadComponent = ()=>{
                 children: "Upload"
             }, void 0, false, {
                 fileName: "src/Component/UploadComponent.jsx",
-                lineNumber: 49,
+                lineNumber: 31,
                 columnNumber: 7
             }, undefined),
-            uploadStatus && /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("p", {
-                children: uploadStatus
+            uploadMessage && /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("p", {
+                children: uploadMessage
             }, void 0, false, {
                 fileName: "src/Component/UploadComponent.jsx",
-                lineNumber: 50,
-                columnNumber: 24
+                lineNumber: 32,
+                columnNumber: 25
             }, undefined),
-            uploadError && /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("p", {
-                className: "error",
-                children: uploadError
+            showImage && /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("button", {
+                onClick: ()=>setShowImage(false),
+                children: "Hide Image"
             }, void 0, false, {
                 fileName: "src/Component/UploadComponent.jsx",
-                lineNumber: 51,
-                columnNumber: 23
+                lineNumber: 33,
+                columnNumber: 21
             }, undefined)
         ]
     }, void 0, true, {
         fileName: "src/Component/UploadComponent.jsx",
-        lineNumber: 39,
+        lineNumber: 28,
         columnNumber: 5
     }, undefined);
 };
-_s(UploadComponent, "w+ffjupSiIQXCQsVSEvFRaO9Eew=");
+_s(UploadComponent, "vup/GhqX8djvOMmItisDiDpC8VI=");
 _c = UploadComponent;
 var _c;
 $RefreshReg$(_c, "UploadComponent");
@@ -33903,7 +33865,7 @@ $RefreshReg$(_c, "UploadComponent");
   window.$RefreshReg$ = prevRefreshReg;
   window.$RefreshSig$ = prevRefreshSig;
 }
-},{"react/jsx-dev-runtime":"iTorj","react":"21dqq","axios":"jo6P5","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru"}],"jo6P5":[function(require,module,exports) {
+},{"react/jsx-dev-runtime":"iTorj","react":"21dqq","axios":"jo6P5","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru","react-router-dom":"9xmpe"}],"jo6P5":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "default", ()=>(0, _axiosJsDefault.default));
@@ -38479,120 +38441,116 @@ var prevRefreshSig = window.$RefreshSig$;
 $parcel$ReactRefreshHelpers$54f7.prelude(module);
 
 try {
-// src/components/DisplayComponent.js
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "DisplayComponent", ()=>DisplayComponent);
 var _jsxDevRuntime = require("react/jsx-dev-runtime");
 var _react = require("react");
 var _reactDefault = parcelHelpers.interopDefault(_react);
-var _reactRouterDom = require("react-router-dom");
 var _axios = require("axios");
 var _axiosDefault = parcelHelpers.interopDefault(_axios);
 var _s = $RefreshSig$();
 const DisplayComponent = ()=>{
     _s();
-    const location = (0, _reactRouterDom.useLocation)();
-    const queryParams = new URLSearchParams(location.search);
-    const fileType = queryParams.get("fileType");
-    const fileName = queryParams.get("fileName");
-    const [fileContent, setFileContent] = (0, _react.useState)(null);
+    const [images, setImages] = (0, _react.useState)([]);
+    const [displayImage, setDisplayImage] = (0, _react.useState)(null);
     (0, _react.useEffect)(()=>{
-        const fetchFileContent = async ()=>{
-            try {
-                const response = await (0, _axiosDefault.default).get(`http://localhost:5000/getFile/${fileName}`);
-                setFileContent(response.data);
-            } catch (error) {
-                console.error("Error fetching file content:", error);
-            }
-        };
-        if (fileName) fetchFileContent();
-    }, [
-        fileName
-    ]);
+        // Fetch images from backend API
+        (0, _axiosDefault.default).get("http://localhost:5000/images").then((response)=>{
+            setImages(response.data);
+        }).catch((error)=>{
+            console.error("Error fetching images:", error);
+        });
+    }, []);
+    const handleDisplayImage = (image)=>{
+        setDisplayImage(image);
+    };
     return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
         children: [
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("h2", {
-                children: "Display Component"
+                children: "Image Gallery"
             }, void 0, false, {
                 fileName: "src/Component/DisplayComponent.jsx",
-                lineNumber: 30,
+                lineNumber: 26,
                 columnNumber: 7
             }, undefined),
-            fileType && fileName && /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
-                children: [
-                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("p", {
+            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
+                className: "image-grid",
+                children: images.map((image)=>/*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
+                        className: "image-item",
                         children: [
-                            "File Type: ",
-                            fileType
-                        ]
-                    }, void 0, true, {
-                        fileName: "src/Component/DisplayComponent.jsx",
-                        lineNumber: 33,
-                        columnNumber: 11
-                    }, undefined),
-                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("p", {
-                        children: [
-                            "File Name: ",
-                            fileName
-                        ]
-                    }, void 0, true, {
-                        fileName: "src/Component/DisplayComponent.jsx",
-                        lineNumber: 34,
-                        columnNumber: 11
-                    }, undefined),
-                    fileType === "image" && fileContent && /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("img", {
-                        src: `data:image/png;base64,${fileContent}`,
-                        alt: "Uploaded"
-                    }, void 0, false, {
-                        fileName: "src/Component/DisplayComponent.jsx",
-                        lineNumber: 36,
-                        columnNumber: 13
-                    }, undefined),
-                    fileType === "video" && fileContent && /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("video", {
-                        controls: true,
-                        width: "400",
-                        children: [
-                            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("source", {
-                                src: `data:video/mp4;base64,${fileContent}`,
-                                type: "video/mp4"
+                            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("img", {
+                                src: image.path,
+                                alt: image.filename
                             }, void 0, false, {
                                 fileName: "src/Component/DisplayComponent.jsx",
-                                lineNumber: 40,
-                                columnNumber: 15
+                                lineNumber: 30,
+                                columnNumber: 13
                             }, undefined),
-                            "Your browser does not support the video tag."
+                            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("p", {
+                                children: image.filename
+                            }, void 0, false, {
+                                fileName: "src/Component/DisplayComponent.jsx",
+                                lineNumber: 31,
+                                columnNumber: 13
+                            }, undefined),
+                            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("button", {
+                                onClick: ()=>handleDisplayImage(image),
+                                children: "Display"
+                            }, void 0, false, {
+                                fileName: "src/Component/DisplayComponent.jsx",
+                                lineNumber: 32,
+                                columnNumber: 13
+                            }, undefined)
                         ]
-                    }, void 0, true, {
+                    }, image.id, true, {
+                        fileName: "src/Component/DisplayComponent.jsx",
+                        lineNumber: 29,
+                        columnNumber: 11
+                    }, undefined))
+            }, void 0, false, {
+                fileName: "src/Component/DisplayComponent.jsx",
+                lineNumber: 27,
+                columnNumber: 7
+            }, undefined),
+            displayImage && /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
+                children: [
+                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("h3", {
+                        children: "Displayed Image"
+                    }, void 0, false, {
+                        fileName: "src/Component/DisplayComponent.jsx",
+                        lineNumber: 38,
+                        columnNumber: 11
+                    }, undefined),
+                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("img", {
+                        src: displayImage.path,
+                        alt: displayImage.filename
+                    }, void 0, false, {
                         fileName: "src/Component/DisplayComponent.jsx",
                         lineNumber: 39,
-                        columnNumber: 13
+                        columnNumber: 11
+                    }, undefined),
+                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("p", {
+                        children: displayImage.filename
+                    }, void 0, false, {
+                        fileName: "src/Component/DisplayComponent.jsx",
+                        lineNumber: 40,
+                        columnNumber: 11
                     }, undefined)
                 ]
             }, void 0, true, {
                 fileName: "src/Component/DisplayComponent.jsx",
-                lineNumber: 32,
-                columnNumber: 9
-            }, undefined),
-            !fileType || !fileName && /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("p", {
-                children: "No file information found."
-            }, void 0, false, {
-                fileName: "src/Component/DisplayComponent.jsx",
-                lineNumber: 47,
+                lineNumber: 37,
                 columnNumber: 9
             }, undefined)
         ]
     }, void 0, true, {
         fileName: "src/Component/DisplayComponent.jsx",
-        lineNumber: 29,
+        lineNumber: 25,
         columnNumber: 5
     }, undefined);
 };
-_s(DisplayComponent, "X+Dks6XHvJakoWYfPyL3cpiRSDA=", false, function() {
-    return [
-        (0, _reactRouterDom.useLocation)
-    ];
-});
+_s(DisplayComponent, "nizMlYNvlUkfLQ2AhwtnDLAlrqI=");
 _c = DisplayComponent;
 var _c;
 $RefreshReg$(_c, "DisplayComponent");
@@ -38602,6 +38560,6 @@ $RefreshReg$(_c, "DisplayComponent");
   window.$RefreshReg$ = prevRefreshReg;
   window.$RefreshSig$ = prevRefreshSig;
 }
-},{"react/jsx-dev-runtime":"iTorj","react":"21dqq","react-router-dom":"9xmpe","axios":"jo6P5","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru"}]},["3QC3y","1xC6H","bB7Pu"], "bB7Pu", "parcelRequirecd54")
+},{"react/jsx-dev-runtime":"iTorj","react":"21dqq","axios":"jo6P5","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru"}]},["3QC3y","1xC6H","bB7Pu"], "bB7Pu", "parcelRequirecd54")
 
 //# sourceMappingURL=index.3d214d75.js.map

@@ -1,51 +1,47 @@
-// src/components/DisplayComponent.js
-import React, { useState, useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+// import { UploadComponent } from './UploadComponent';
 
-export const DisplayComponent = () => {
-  const location = useLocation();
-  const queryParams = new URLSearchParams(location.search);
-  const fileType = queryParams.get('fileType');
-  const fileName = queryParams.get('fileName');
-  const [fileContent, setFileContent] = useState(null);
+export const  DisplayComponent = () => {
+  const [images, setImages] = useState([]);
+  const [displayImage, setDisplayImage] = useState(null);
 
   useEffect(() => {
-    const fetchFileContent = async () => {
-      try {
-        const response = await axios.get(`http://localhost:5000/getFile/${fileName}`);
-        setFileContent(response.data);
-      } catch (error) {
-        console.error('Error fetching file content:', error);
-      }
-    };
+    // Fetch images from backend API
+    axios.get('http://localhost:5000/images')
+      .then(response => {
+        setImages(response.data);
+      })
+      .catch(error => {
+        console.error('Error fetching images:', error);
+      });
+  }, []);
 
-    if (fileName) {
-      fetchFileContent();
-    }
-  }, [fileName]);
+  const handleDisplayImage = (image) => {
+    setDisplayImage(image);
+  };
 
   return (
     <div>
-      <h2>Display Component</h2>
-      {fileType && fileName && (
+      <h2>Image Gallery</h2>
+      <div className="image-grid">
+        {images.map(image => (
+          <div key={image.id} className="image-item">
+            <img src={image.path} alt={image.filename} />
+            <p>{image.filename}</p>
+            <button onClick={() => handleDisplayImage(image)}>Display</button>
+          </div>
+        ))}
+      </div>
+      {displayImage && (
         <div>
-          <p>File Type: {fileType}</p>
-          <p>File Name: {fileName}</p>
-          {fileType === 'image' && fileContent && (
-            <img src={`data:image/png;base64,${fileContent}`} alt="Uploaded" />
-          )}
-          {fileType === 'video' && fileContent && (
-            <video controls width="400">
-              <source src={`data:video/mp4;base64,${fileContent}`} type="video/mp4" />
-              Your browser does not support the video tag.
-            </video>
-          )}
+          <h3>Displayed Image</h3>
+          <img src={displayImage.path} alt={displayImage.filename} />
+          <p>{displayImage.filename}</p>
         </div>
-      )}
-      {!fileType || !fileName && (
-        <p>No file information found.</p>
       )}
     </div>
   );
-};
+}
+
+
