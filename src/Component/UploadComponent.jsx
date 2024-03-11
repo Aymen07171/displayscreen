@@ -30,8 +30,7 @@ export const UploadComponent = () => {
       <input type="file" onChange={handleFileChange} />
       <button onClick={handleUpload}>Upload</button>
       {uploadMessage && <p>{uploadMessage}</p>}
-      {showImage && <button onClick={() => setShowImage(false)}>Hide Image</button>}
-      {/* <Link to="/display">Go to Display Component</Link> */}
+      <Link to="/display">Go to Display Component</Link>
     </div>
   );
 }

@@ -33840,13 +33840,13 @@ const UploadComponent = ()=>{
                 lineNumber: 32,
                 columnNumber: 25
             }, undefined),
-            showImage && /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("button", {
-                onClick: ()=>setShowImage(false),
-                children: "Hide Image"
+            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactRouterDom.Link), {
+                to: "/display",
+                children: "Go to Display Component"
             }, void 0, false, {
                 fileName: "src/Component/UploadComponent.jsx",
                 lineNumber: 33,
-                columnNumber: 21
+                columnNumber: 7
             }, undefined)
         ]
     }, void 0, true, {
@@ -33865,7 +33865,7 @@ $RefreshReg$(_c, "UploadComponent");
   window.$RefreshReg$ = prevRefreshReg;
   window.$RefreshSig$ = prevRefreshSig;
 }
-},{"react/jsx-dev-runtime":"iTorj","react":"21dqq","axios":"jo6P5","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru","react-router-dom":"9xmpe"}],"jo6P5":[function(require,module,exports) {
+},{"react/jsx-dev-runtime":"iTorj","react":"21dqq","axios":"jo6P5","react-router-dom":"9xmpe","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru"}],"jo6P5":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "default", ()=>(0, _axiosJsDefault.default));
@@ -38417,6 +38417,14 @@ const Screen1Component = ()=>{
                 fileName: "src/Component/Screen1Component.jsx",
                 lineNumber: 12,
                 columnNumber: 9
+            }, undefined),
+            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactRouterDom.Link), {
+                to: "/display",
+                children: " Go To Display Componenent"
+            }, void 0, false, {
+                fileName: "src/Component/Screen1Component.jsx",
+                lineNumber: 14,
+                columnNumber: 9
             }, undefined)
         ]
     }, void 0, true, {
@@ -38452,105 +38460,46 @@ var _axiosDefault = parcelHelpers.interopDefault(_axios);
 var _s = $RefreshSig$();
 const DisplayComponent = ()=>{
     _s();
-    const [images, setImages] = (0, _react.useState)([]);
-    const [displayImage, setDisplayImage] = (0, _react.useState)(null);
+    const [lastImage, setLastImage] = (0, _react.useState)(null);
     (0, _react.useEffect)(()=>{
-        // Fetch images from backend API
-        (0, _axiosDefault.default).get("http://localhost:5000/images").then((response)=>{
-            setImages(response.data);
+        // Fetch last uploaded image from backend endpoint
+        (0, _axiosDefault.default).get("http://localhost:5000/last-image").then((response)=>{
+            setLastImage(response.data);
         }).catch((error)=>{
-            console.error("Error fetching images:", error);
+            console.error("Error fetching last image:", error);
         });
     }, []);
-    const handleDisplayImage = (image)=>{
-        setDisplayImage(image);
-    };
     return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
         children: [
-            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("h2", {
-                children: "Image Gallery"
+            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("h1", {
+                children: "Last Uploaded Image"
             }, void 0, false, {
                 fileName: "src/Component/DisplayComponent.jsx",
-                lineNumber: 26,
+                lineNumber: 20,
                 columnNumber: 7
             }, undefined),
-            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
-                className: "image-grid",
-                children: images.map((image)=>/*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
-                        className: "image-item",
-                        children: [
-                            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("img", {
-                                src: image.path,
-                                alt: image.filename
-                            }, void 0, false, {
-                                fileName: "src/Component/DisplayComponent.jsx",
-                                lineNumber: 30,
-                                columnNumber: 13
-                            }, undefined),
-                            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("p", {
-                                children: image.filename
-                            }, void 0, false, {
-                                fileName: "src/Component/DisplayComponent.jsx",
-                                lineNumber: 31,
-                                columnNumber: 13
-                            }, undefined),
-                            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("button", {
-                                onClick: ()=>handleDisplayImage(image),
-                                children: "Display"
-                            }, void 0, false, {
-                                fileName: "src/Component/DisplayComponent.jsx",
-                                lineNumber: 32,
-                                columnNumber: 13
-                            }, undefined)
-                        ]
-                    }, image.id, true, {
-                        fileName: "src/Component/DisplayComponent.jsx",
-                        lineNumber: 29,
-                        columnNumber: 11
-                    }, undefined))
+            lastImage && /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
+                children: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("img", {
+                    src: `http://localhost:5000/${lastImage.path}`,
+                    alt: "Last Uploaded"
+                }, void 0, false, {
+                    fileName: "src/Component/DisplayComponent.jsx",
+                    lineNumber: 23,
+                    columnNumber: 11
+                }, undefined)
             }, void 0, false, {
                 fileName: "src/Component/DisplayComponent.jsx",
-                lineNumber: 27,
-                columnNumber: 7
-            }, undefined),
-            displayImage && /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
-                children: [
-                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("h3", {
-                        children: "Displayed Image"
-                    }, void 0, false, {
-                        fileName: "src/Component/DisplayComponent.jsx",
-                        lineNumber: 38,
-                        columnNumber: 11
-                    }, undefined),
-                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("img", {
-                        src: displayImage.path,
-                        alt: displayImage.filename
-                    }, void 0, false, {
-                        fileName: "src/Component/DisplayComponent.jsx",
-                        lineNumber: 39,
-                        columnNumber: 11
-                    }, undefined),
-                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("p", {
-                        children: displayImage.filename
-                    }, void 0, false, {
-                        fileName: "src/Component/DisplayComponent.jsx",
-                        lineNumber: 40,
-                        columnNumber: 11
-                    }, undefined)
-                ]
-            }, void 0, true, {
-                fileName: "src/Component/DisplayComponent.jsx",
-                lineNumber: 37,
+                lineNumber: 22,
                 columnNumber: 9
             }, undefined)
         ]
     }, void 0, true, {
         fileName: "src/Component/DisplayComponent.jsx",
-        lineNumber: 25,
+        lineNumber: 19,
         columnNumber: 5
     }, undefined);
 };
-_s(DisplayComponent, "nizMlYNvlUkfLQ2AhwtnDLAlrqI=");
+_s(DisplayComponent, "5yU80HR3Q/kTftenGsxQ9Q9x60Y=");
 _c = DisplayComponent;
 var _c;
 $RefreshReg$(_c, "DisplayComponent");

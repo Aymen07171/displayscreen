@@ -1,47 +1,28 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-// import { UploadComponent } from './UploadComponent';
 
-export const  DisplayComponent = () => {
-  const [images, setImages] = useState([]);
-  const [displayImage, setDisplayImage] = useState(null);
+export const DisplayComponent = () => {
+  const [lastImage, setLastImage] = useState(null);
 
   useEffect(() => {
-    // Fetch images from backend API
-    axios.get('http://localhost:5000/images')
+    // Fetch last uploaded image from backend endpoint
+    axios.get('http://localhost:5000/last-image')
       .then(response => {
-        setImages(response.data);
+        setLastImage(response.data);
       })
       .catch(error => {
-        console.error('Error fetching images:', error);
+        console.error('Error fetching last image:', error);
       });
   }, []);
 
-  const handleDisplayImage = (image) => {
-    setDisplayImage(image);
-  };
-
   return (
     <div>
-      <h2>Image Gallery</h2>
-      <div className="image-grid">
-        {images.map(image => (
-          <div key={image.id} className="image-item">
-            <img src={image.path} alt={image.filename} />
-            <p>{image.filename}</p>
-            <button onClick={() => handleDisplayImage(image)}>Display</button>
-          </div>
-        ))}
-      </div>
-      {displayImage && (
+      <h1>Last Uploaded Image</h1>
+      {lastImage && (
         <div>
-          <h3>Displayed Image</h3>
-          <img src={displayImage.path} alt={displayImage.filename} />
-          <p>{displayImage.filename}</p>
+          <img src={`http://localhost:5000/${lastImage.path}`} alt="Last Uploaded" />
         </div>
       )}
     </div>
   );
-}
-
-
+};

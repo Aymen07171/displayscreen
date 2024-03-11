@@ -10,6 +10,8 @@
         
         {/* Link to navigate to the UploadComponent */}
         <Link to="/upload">Go to Upload Component</Link>
+        
+        <Link to= "/display"> Go To Display Componenent</Link>
         </div>
     );
     };
